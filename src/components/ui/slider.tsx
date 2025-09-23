@@ -84,7 +84,7 @@ export default function Slider({ posts }: SliderProps) {
       {/* Prev button */}
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-3 z-50 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 hover:bg-black/60 text-white"
+        className="absolute top-1/2 left-3 z-10 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 hover:bg-black/60 text-white"
       >
         ‹
       </button>
@@ -92,7 +92,7 @@ export default function Slider({ posts }: SliderProps) {
       {/* Next button */}
       <button
         onClick={nextSlide}
-        className="absolute z-50 top-1/2 right-3 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 hover:bg-black/60 text-white"
+        className="absolute z-10 top-1/2 right-3 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 hover:bg-black/60 text-white"
       >
         ›
       </button>

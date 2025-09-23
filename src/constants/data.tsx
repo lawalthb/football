@@ -121,13 +121,13 @@ export const mobileHeaderNavLinks = [
     icon: <HomeIcon className="h-[1.125rem] w-[1.125rem]" />,
   },
   {
-    path: "/football",
+    path: "/football/competitions/news",
     title: "Football",
     id: 1,
     icon: <FootballIcon className="h-[1.125rem] w-[1.125rem]" />,
   },
   {
-    path: "/transfers",
+    path: "/transfer",
     title: "Transfer",
     id: 2,
     icon: <TransferIcon className="h-[1.125rem] w-[1.125rem]" />,

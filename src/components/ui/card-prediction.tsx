@@ -21,7 +21,7 @@ type Poll = {
 
 export function PredictionCard({ poll }: { poll: Poll }) {
   return (
-    <article className="font-lato flex min-h-[414px] min-w-[450px] flex-col justify-center rounded-2xl bg-[#000000A3] bg-[url(/poll-bg-img.jpg)] bg-cover bg-center px-3.5 py-8 text-white bg-blend-overlay">
+    <article className="font-lato flex min-h-[414px] min-w-[380px] md:min-w-[450px] flex-col justify-center rounded-2xl bg-[#000000A3] bg-[url(/poll-bg-img.jpg)] bg-cover bg-center px-3.5 py-8 text-white bg-blend-overlay">
       {/* Title / Description */}
       <section className="mb-4 text-center text-xl tracking-[0.19px]">
         <p className="mb-2 font-bold">{poll?.title}</p>

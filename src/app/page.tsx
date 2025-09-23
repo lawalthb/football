@@ -71,7 +71,7 @@ setPolls(pollsData?.data)
   }
   return (
     <>
-      <main className="mx-auto grid max-w-[1076px] gap-y-12 px-2.5 py-5 lg:py-[6.25rem]">
+      <main className="mx-auto w-full grid max-w-[1076px] gap-y-12 px-2.5 py-5 lg:py-[6.25rem]">
         <div className="">
           <Slider posts={posts.slice(0, 5)} /> 
         </div>
