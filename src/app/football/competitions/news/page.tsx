@@ -24,7 +24,7 @@ export default function SuperEaglesNews() {
 
 
   return (
-     <main className="pt-5 pb-5 lg:px-48 lg:pt-12 lg:pb-[6.25rem]">
+     <main className="pt-5 pb-5 lg:pt-12 lg:pb-[6.25rem]">
               <TrendyPost categories={categories} news={true}/>
           <section className="mb-5 flex flex-col gap-5 lg:mb-28 lg:items-start my-5">
            

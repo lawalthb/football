@@ -68,6 +68,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Football Nigeria",
   description: "",
+  icons: {
+    icon: "/favicon.png", 
+  },
 };
 
 export default function RootLayout({
