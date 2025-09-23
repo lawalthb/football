@@ -68,7 +68,7 @@ export default function AllMatchesPreviewCard({ filteredfixtures, title, type, t
   const matchData = filteredfixtures
   return (
     <section className="font-lato rounded-md bg-white px-3 py-5 shadow-sm">
-      <SubTitle title={title} />
+      {/* <SubTitle title={title} /> */}
 
       <ul className="mt-3 divide-y divide-gray-100">
         <div className="text-center w-full mb-2 bg-[#E6F3EE] py-[9px]">{tournamentName}</div>
