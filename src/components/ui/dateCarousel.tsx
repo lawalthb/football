@@ -62,7 +62,7 @@ export default function DateCarousel({
                 className={`flex-1 text-gray-800 min-w-[70px] max-w-[100px]  py-1.5 sm:py-2 px-3 sm:px-5 text-xs sm:text-sm font-semibold transition text-center ${
                   isCenter || isToday
                     ? "border-b-4 border-b-primary"
-                    : "bg-gray-100 hover:bg-gray-200 rounded-lg"
+                    : "bg-gray-100 hover:border-b-4 hover:border-b-primary cursor-pointer"
                 }`}
               >
                 {formatted}

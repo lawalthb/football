@@ -1,46 +1,52 @@
 "use client";
 
 import { useFootballStore } from "@/store/footballStore";
-import {  getTournamentNavLists } from "@/components/methods";
 import Ads from "@/components/ui/ad";
-import BreadCrumb from "@/components/ui/bread-crumb";
-import MatchPreviewCard from "@/components/ui/card-match-preview";
-import LeagueTable from "@/components/ui/league-table";
-import NavLinkList from "@/components/ui/navlink-list";
-import SubTitle from "@/components/ui/subtitle";
-import SwitchView from "@/components/ui/tab-switch-view";
-import { useEffect, useState } from "react";
-import SwitchViewTab from "@/components/ui/switchViewTab";
+import { useState } from "react";
 import AllMatchesPreviewCard from "@/components/ui/all-teams-preview-card";
 import DateCarousel from "@/components/ui/dateCarousel";
+import { Fixture } from "@/types/football.types";
+import { format, parseISO } from "date-fns";
 
 export default function ScoresAndFixtures() {
+  const today = format(new Date(), "yyyy-MM-dd");
+  const [selectedDate, setSelectedDate] = useState<string>(today);
+
+  const handleDateChange = (date: string) => {
+    setSelectedDate(date);
+  };
+
+ 
     
 
-   const { fixtures, matchPreview } =
+   const { fixtures } =
       useFootballStore();
 
-       const tournamentMatchPreviewName = matchPreview?.matchInfo?.competition?.name 
-       const tournamentName = tournamentMatchPreviewName 
+ // If a date is selected, filter by it
+  const filteredFixtures = fixtures.filter((fixture) => {
+    const fixtureDate = format(parseISO(fixture?.matchInfo?.date), "yyyy-MM-dd");
+    return fixtureDate === selectedDate;
+  });
 
-    
 
-const liveFixturesData = fixtures?.filter(fixture => fixture?.liveData?.matchDetails?.matchStatus === "Fixture")
+   const grouped = filteredFixtures.reduce<Record<string, Fixture[]>>((acc, fixture) => {
+    const compName = fixture.matchInfo.competition.name;
+    if (!acc[compName]) {
+      acc[compName] = [];
+    }
+    acc[compName].push(fixture);
+    return acc;
+  }, {});
 
-const resultData = fixtures?.filter(fixture => fixture?.liveData?.matchDetails?.matchStatus === "Played")
- const handleDateChange = (date: string) => {
-    console.log("Selected date:", date);
-    // Fetch fixtures for this date
-  };
   return (
     <main className="w-full pt-5 pb-5 lg:px-20 lg:pt-12 lg:pb-[6.25rem]">
       <section className="mb-5 flex flex-col gap-5 lg:mb-28 items-center my-5">
         <DateCarousel onDateSelect={handleDateChange} />
          <div className="w-full">
 
-          <AllMatchesPreviewCard type = 'Fixture' title="Today's Matches / Next Match"  filteredfixtures={fixtures} tournamentName={''} />
-         </div>
+          {Object.entries(grouped).map(([competitionName, matches], index) => <AllMatchesPreviewCard key={index} type = 'Fixture'  filteredfixtures={matches} tournamentName={competitionName} />)}
           <Ads />
+         </div>
          
       </section>
     </main>
