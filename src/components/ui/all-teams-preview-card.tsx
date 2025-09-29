@@ -2,54 +2,50 @@
 
 import Image from "next/image";
 import { fifaToIso2 } from "../methods";
-import { addMinutes, format, parseISO, isBefore } from "date-fns";
+import { addMinutes, format, parseISO } from "date-fns";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Contestant, Fixture } from "@/types/football.types";
-
 
 // ----------------------
 // Types
 // ----------------------
 
-
 interface MatchPreviewCardProps {
   filteredfixtures: Fixture[];
-   type: string;
-   tournamentName: string;
+  type: string;
+  tournamentName: string;
 }
-
-
-
-
 
 // ----------------------
 // Main Card Component
 // ----------------------
-export default function AllMatchesPreviewCard({ filteredfixtures, type, tournamentName }: MatchPreviewCardProps) {
- 
-  const matchData = filteredfixtures
+export default function AllMatchesPreviewCard({
+  filteredfixtures,
+  type,
+  tournamentName,
+}: MatchPreviewCardProps) {
+  const matchData = filteredfixtures;
   return (
     <section className="font-lato rounded-md bg-white px-3 py-5 shadow-sm">
-
       <ul className="mt-3 divide-y divide-gray-100">
-        <div className="text-center w-full mb-2 bg-[#E6F3EE] py-[9px]">{tournamentName}</div>
+        <li className="mb-2 w-full list-none bg-[#E6F3EE] py-[9px] text-center">
+          {tournamentName}
+        </li>
         {matchData?.map((fixture) => (
           <MatchPreview
             key={fixture?.matchInfo?.id}
             id={fixture?.matchInfo?.id}
             contestants={fixture.matchInfo.contestant}
             time={fixture.matchInfo.time}
-            date={fixture.matchInfo.date}
             liveData={fixture?.liveData}
             type={type}
-            showFlag ={fixture?.matchInfo?.competition?.name !== 'NPFL'}
+            showFlag={fixture?.matchInfo?.competition?.name !== "NPFL"}
             // detail={detail}
           />
         ))}
       </ul>
-      <div className="my-5">
-      </div>
+      <div className="my-5"></div>
     </section>
   );
 }
@@ -71,23 +67,23 @@ interface LiveData {
 interface MatchPreviewProps {
   contestants: Contestant[];
   time: string;
-  date: string;
-  liveData?: LiveData
-  type?: string
-  id?: string
-  showFlag?: boolean
+  liveData?: LiveData;
+  type?: string;
+  id?: string;
+  showFlag?: boolean;
 }
 
-
-
-const MatchPreview = ({ contestants, time, date = '', liveData, type, id, showFlag }: MatchPreviewProps) => {
+const MatchPreview = ({
+  contestants,
+  time,
+  liveData,
+  type,
+  id,
+  showFlag,
+}: MatchPreviewProps) => {
   const [home, away] = contestants ?? [];
   const params = useParams();
   const country = params.id as string;
-
-  // Parse the fixture date (full UTC date)
-  const fixtureDate = parseISO(date);
-  const now = new Date();
 
   // Safe fallback codes
   const homeCode = home?.code ?? "xx";
@@ -97,8 +93,12 @@ const MatchPreview = ({ contestants, time, date = '', liveData, type, id, showFl
   const homeCountryCode = fifaToIso2[homeCode];
   const awayCountryCode = fifaToIso2[awayCode];
 
-  const homeFlag = homeCountryCode ? `https://flagcdn.com/w40/${homeCountryCode}.png` : null;
-  const awayFlag = awayCountryCode ? `https://flagcdn.com/w40/${awayCountryCode}.png` : null;
+  const homeFlag = homeCountryCode
+    ? `https://flagcdn.com/w40/${homeCountryCode}.png`
+    : null;
+  const awayFlag = awayCountryCode
+    ? `https://flagcdn.com/w40/${awayCountryCode}.png`
+    : null;
 
   const homeScore = liveData?.matchDetails?.scores?.ft?.home;
   const awayScore = liveData?.matchDetails?.scores?.ft?.away;
@@ -114,11 +114,6 @@ const MatchPreview = ({ contestants, time, date = '', liveData, type, id, showFl
   } catch {
     // fallback handled
   }
-
-  // ----------------------
-  // Decide display (Past -> Score | Future -> Time)
-  // ----------------------
-  const isPast = isBefore(fixtureDate, now);
 
   return (
     <li className="flex items-center justify-center py-2 text-xs even:bg-gray-50">
@@ -143,8 +138,8 @@ const MatchPreview = ({ contestants, time, date = '', liveData, type, id, showFl
             )}
           </div>
 
-          {/* Middle: Score if past, Time if future */}
-          {isPast ? (
+          {/* Middle: Score if played, Time if fixture */}
+          {type === "Played" ? (
             <Link
               href={`/football/${country?.replace(/\s+/g, "-")}/matches?fixture=${id}`}
               className="mx-2 shrink-0 rounded bg-emerald-50 px-2 py-0.5 font-semibold text-emerald-700"
@@ -180,4 +175,3 @@ const MatchPreview = ({ contestants, time, date = '', liveData, type, id, showFl
     </li>
   );
 };
-
